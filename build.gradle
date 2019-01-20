@@ -4,7 +4,7 @@ buildscript {
 
   ext {
     complextype_group = "coffeepartner.complextype"
-    complextype_version = "0.0.1"
+    complextype_version = "1.0.0"
   }
   repositories {
     google()

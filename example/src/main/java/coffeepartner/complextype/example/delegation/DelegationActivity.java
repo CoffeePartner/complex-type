@@ -16,6 +16,7 @@ import coffeepartner.complextype.example.common.Teacher;
 public class DelegationActivity extends AbstractRvActivity {
   @Override
   public ComplexAdapter createAdapter() {
+    // Like Gson TypeFactory
     ComplexProvider provider = new ComplexProvider.Builder()
       .registerHierarchyBinder(Person.class, new PersonViewBinder())
       .registerBinderFactory(new ViewBinderFactory() {
