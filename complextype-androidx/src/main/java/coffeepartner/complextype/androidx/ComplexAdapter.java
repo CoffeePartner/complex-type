@@ -17,11 +17,11 @@ import static coffeepartner.complextype.androidx.internal.Util.requireNonNull;
  * Created by dieyi on 2019/1/20.
  */
 public class ComplexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-  private final BinderContainer<Object> container;
+  private final BinderContainer container;
   private List<?> items = Collections.emptyList();
 
   public ComplexAdapter(ComplexProvider provider) {
-    container = new BinderContainer<>(provider);
+    container = new BinderContainer(provider);
   }
 
 
@@ -55,6 +55,7 @@ public class ComplexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
       .getItemId(item);
   }
 
+  @NonNull
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     int pos = viewType / ViewBinder.MAX_TYPE;
@@ -65,7 +66,7 @@ public class ComplexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
   @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+  public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
     onBindViewHolder(holder, position, Collections.emptyList());
   }
 
@@ -101,22 +102,21 @@ public class ComplexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
   }
 
   @SuppressWarnings("unchecked")
-  class BinderContainer<T> {
+  class BinderContainer {
 
     private final ComplexProvider provider;
-    private List<ViewBinder<T, ?>> binders = new ArrayList<>();
-    private List<Class<T>> classes = new ArrayList<>();
+    private List<ViewBinder<Object, RecyclerView.ViewHolder>> binders = new ArrayList<>();
+    private List<Class<?>> classes = new ArrayList<>();
 
     BinderContainer(ComplexProvider provider) {
       this.provider = requireNonNull(provider);
     }
 
-    int itemToType(int position, T data) {
-      //noinspection unchecked
-      Class<T> clazz = (Class<T>) data.getClass();
+    int itemToType(int position, Object data) {
+      Class<?> clazz = data.getClass();
       int index = classes.indexOf(clazz);
       if (index < 0) {
-        ViewBinder<T, ?> binder = provider.viewBinder(clazz);
+        ViewBinder<Object, RecyclerView.ViewHolder> binder = (ViewBinder<Object, RecyclerView.ViewHolder>) provider.viewBinder(clazz);
         index = classes.size();
         classes.add(clazz);
         binders.add(binder);
@@ -125,11 +125,11 @@ public class ComplexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
       return index * ViewBinder.MAX_TYPE + binders.get(index).getItemViewType(data, position);
     }
 
-    ViewBinder<T, RecyclerView.ViewHolder> getBinderByTypeIndex(int pos) {
-      return (ViewBinder<T, RecyclerView.ViewHolder>) binders.get(pos);
+    ViewBinder<Object, RecyclerView.ViewHolder> getBinderByTypeIndex(int pos) {
+      return binders.get(pos);
     }
 
-    ViewBinder<T, RecyclerView.ViewHolder> getBinderByClass(Class clazz) {
+    ViewBinder<Object, RecyclerView.ViewHolder> getBinderByClass(Class clazz) {
       return getBinderByTypeIndex(classes.indexOf(clazz));
     }
   }

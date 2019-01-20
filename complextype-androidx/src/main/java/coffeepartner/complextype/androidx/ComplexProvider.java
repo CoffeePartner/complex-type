@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import coffeepartner.complextype.androidx.internal.BinderFactoryUtil;
 
 import static coffeepartner.complextype.androidx.internal.Util.requireNonNull;
@@ -34,10 +35,10 @@ public class ComplexProvider {
     return new Builder(this);
   }
 
-  public ViewBinder<T, ?> nextViewBinder(@Nullable ViewBinderFactory skipPast, Class<T> clazz) {
+  public <T, V extends RecyclerView.ViewHolder> ViewBinder<T, V> nextViewBinder(@Nullable ViewBinderFactory skipPast, Class<? extends T> clazz) {
     int start = skipPast == null ? 0 : factories.indexOf(skipPast) + 1;
     for (int i = start; i < factories.size(); i++) {
-      ViewBinder<?, ?> binder = factories.get(i).create(this, clazz);
+      ViewBinder<T, V> binder = factories.get(i).create(this, clazz);
       if (binder != null) {
         return binder;
       }
@@ -60,7 +61,7 @@ public class ComplexProvider {
     throw new IllegalArgumentException(builder.toString());
   }
 
-  public <T> ViewBinder<T, ?> viewBinder(Class<T> clazz) {
+  public <T, V extends RecyclerView.ViewHolder> ViewBinder<T, V> viewBinder(Class<? extends T> clazz) {
     return nextViewBinder(null, clazz);
   }
 
@@ -81,7 +82,7 @@ public class ComplexProvider {
     }
 
 
-    public <T> Builder registerViewBinder(Class<T> clazz, ViewBinder<T, ?> binder) {
+    public <T> Builder registerViewBinder(Class<? extends T> clazz, ViewBinder<T, ?> binder) {
       factories.add(BinderFactoryUtil.newSingleFactory(requireNonNull(clazz), requireNonNull(binder)));
       return this;
     }
@@ -91,7 +92,7 @@ public class ComplexProvider {
       return this;
     }
 
-    public <T> Builder registerHierarchyBinder(Class<T> clazz, ViewBinder<T, ?> binder) {
+    public <T> Builder registerHierarchyBinder(Class<? extends T> clazz, ViewBinder<T, ?> binder) {
       hierarchyFactories.add(BinderFactoryUtil.newHierarchyFactory(requireNonNull(clazz), requireNonNull(binder)));
       return this;
     }

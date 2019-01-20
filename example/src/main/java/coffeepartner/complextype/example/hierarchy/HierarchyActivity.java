@@ -16,7 +16,10 @@ import coffeepartner.complextype.example.common.Teacher;
 public class HierarchyActivity extends AbstractRvActivity {
   @Override
   public ComplexAdapter createAdapter() {
-    ComplexProvider provider = new ComplexProvider.Builder().registerViewBinder(Person.class, new PersonViewBinder()).build();
+    ComplexProvider provider = new ComplexProvider
+      .Builder()
+      .registerHierarchyBinder(Person.class, new PersonViewBinder())
+      .build();
     ComplexAdapter adapter = new ComplexAdapter(provider);
     adapter.setItems(Arrays.asList(
       new Person("Bob", 25),

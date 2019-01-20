@@ -19,6 +19,7 @@
     <activity android:name=".simple.SimpleActivity" />
     <activity android:name=".multiple.MultipleActivity" />
     <activity android:name=".hierarchy.HierarchyActivity" />
+    <activity android:name=".delegation.DelegationActivity" />
   </application>
 
 </manifest>

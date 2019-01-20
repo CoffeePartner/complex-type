@@ -13,10 +13,9 @@ import java.util.List;
 /**
  * Created by dieyi on 2019/1/20.
  */
-public abstract class ViewBinder<T, VH extends ViewHolder> {
+public abstract class ViewBinder<T, VH extends RecyclerView.ViewHolder> {
 
-  public static final int MAX_TYPE = 128;
-
+  public static final int MAX_TYPE = 1024;
 
   /**
    * invoke when adapter attached to the view binder

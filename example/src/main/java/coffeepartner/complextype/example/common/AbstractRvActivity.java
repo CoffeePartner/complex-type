@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import coffeepartner.complextype.androidx.ComplexAdapter;
@@ -32,6 +34,9 @@ public abstract class AbstractRvActivity extends AppCompatActivity {
     RecyclerView rv = findViewById(R.id.rv);
     rv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
     rv.setAdapter(createAdapter());
+    DividerItemDecoration decoration = new DividerItemDecoration(this, LinearLayout.VERTICAL);
+    decoration.setDrawable(getResources().getDrawable(R.drawable.divider_h));
+    rv.addItemDecoration(decoration);
   }
 
   public abstract ComplexAdapter createAdapter();

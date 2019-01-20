@@ -1,1 +1,1 @@
-include ':app', ':complextype-appcompat', ':complextype-androidx'
+include ':example', ':complextype-appcompat', ':complextype-androidx'

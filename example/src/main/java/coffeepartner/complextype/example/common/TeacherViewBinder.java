@@ -13,7 +13,7 @@ public class TeacherViewBinder extends ViewBinder<Teacher, TeacherViewHolder> {
 
   @Override
   public TeacherViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup parent) {
-    return new TeacherViewHolder(inflater.inflate(R.layout.teacher_vh1, parent, false));
+    return new TeacherViewHolder(inflater.inflate(R.layout.teacher_vh, parent, false));
   }
 
   @Override

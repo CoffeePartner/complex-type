@@ -1,6 +1,5 @@
 package coffeepartner.complextype.example.multiple;
 
-import java.lang.reflect.Type;
 import java.util.Arrays;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +9,9 @@ import coffeepartner.complextype.androidx.ViewBinder;
 import coffeepartner.complextype.androidx.ViewBinderFactory;
 import coffeepartner.complextype.example.common.AbstractRvActivity;
 import coffeepartner.complextype.example.common.Parent;
+import coffeepartner.complextype.example.common.ParentViewBinder;
 import coffeepartner.complextype.example.common.Person;
+import coffeepartner.complextype.example.common.PersonViewBinder;
 import coffeepartner.complextype.example.common.Teacher;
 import coffeepartner.complextype.example.common.TeacherViewBinder;
 
@@ -21,10 +22,15 @@ public class MultipleActivity extends AbstractRvActivity {
   @Override
   public ComplexAdapter createAdapter() {
     ComplexProvider provider = new ComplexProvider.Builder().registerBinderFactory(new ViewBinderFactory() {
+      @SuppressWarnings("unchecked")
       @Override
-      public ViewBinder<?, ? extends RecyclerView.ViewHolder> create(ComplexProvider context, Class<?> clazz) {
-        if(clazz == Teacher.class) {
-          return new TeacherViewBinder();
+      public <T, V extends RecyclerView.ViewHolder> ViewBinder<T, V> create(ComplexProvider context, Class<? extends T> clazz) {
+        if (clazz == Teacher.class) {
+          return (ViewBinder<T, V>) new TeacherViewBinder();
+        } else if (clazz == Parent.class) {
+          return (ViewBinder<T, V>) new ParentViewBinder();
+        } else if (Person.class.isAssignableFrom(clazz)) {
+          return (ViewBinder<T, V>) new PersonViewBinder();
         }
         return null;
       }

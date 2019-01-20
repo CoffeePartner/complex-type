@@ -2,8 +2,6 @@ package coffeepartner.complextype.example.common;
 
 import java.util.Arrays;
 
-import coffeepartner.complextype.example.common.Person;
-
 /**
  * Created by dieyi on 2019/1/20.
  */

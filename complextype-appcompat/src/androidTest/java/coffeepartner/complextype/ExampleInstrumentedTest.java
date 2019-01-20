@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     // Context of the app under test.
     Context appContext = InstrumentationRegistry.getTargetContext();
 
-    assertEquals("coffeepartner.complextype.test", appContext.getPackageName());
+    assertEquals("coffeepartner.complextype.appcompat.test", appContext.getPackageName());
   }
 }
