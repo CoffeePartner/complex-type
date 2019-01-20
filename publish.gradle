@@ -1,0 +1,67 @@
+subprojects { pro ->
+
+  if (!pro.name.startsWith("complextype")) return
+  version = complextype_version
+  group = complextype_group
+
+  apply plugin: 'com.github.dcendents.android-maven'
+  apply plugin: 'com.jfrog.bintray'
+  task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+  }
+  task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    options {
+      encoding "UTF-8"
+      charSet 'UTF-8'
+    }
+    failOnError = false
+  }
+  task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+  }
+
+  artifacts {
+    archives sourcesJar
+    archives javadocJar
+  }
+  install {
+    repositories.mavenInstaller {
+      pom {
+        project {
+          packaging 'aar'
+          licenses {
+            license {
+              name 'The Apache Software License, Version 2.0'
+              url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+          }
+          developers {
+            developer {
+              id 'dieyidezui'
+              name '耿万鹏'
+              email 'dieyidezui@gmail.com'
+            }
+          }
+        }
+      }
+    }
+  }
+
+  bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
+    configurations = ['archives']
+    pkg {
+      repo = "maven"
+      name = pro.name
+      websiteUrl = "https://github.com/CoffeePartner/complex-type"
+      vcsUrl = "https://github.com/CoffeePartner/complex-type.git"
+      licenses = ["Apache-2.0"]
+      publish = true
+    }
+  }
+}
