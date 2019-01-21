@@ -1,8 +1,8 @@
 # complex-type
 
-[ ![Download](https://api.bintray.com/packages/dieyi/maven/complextype-androidx/images/download.svg) ](https://bintray.com/dieyi/maven/complextype-androidx/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/dieyi/maven/complextype-androidx/images/download.svg) ](https://bintray.com/dieyi/maven/complextype-androidx/_latestVersion)[![codebeat badge](https://codebeat.co/badges/31dfce19-b609-4c3e-9d13-8dfe34dd9f87)](https://codebeat.co/projects/github-com-coffeepartner-complex-type-master)
 
-An Android library to create complex items easily in RecyclerView
+An Android library to create complex items easily in RecyclerView.
 
 ## Usage
 
@@ -17,9 +17,10 @@ implementation 'coffeepartner.complextype:complextype-appcompat:1.0.0'
 
 ### Example
 
+
 ```java
 
-// Like Gson TypeFactory
+// Like Gson TypeFactory, build the provider
 ComplexProvider provider = new ComplexProvider.Builder()
   .registerHierarchyBinder(Person.class, new PersonViewBinder())
   .registerBinderFactory(new ViewBinderFactory() {
@@ -36,7 +37,7 @@ ComplexProvider provider = new ComplexProvider.Builder()
   })
   .build();
 
-// The Adapter
+// The Adapter with provider
 ComplexAdapter adapter = new ComplexAdapter(provider);
 adapter.setItems(Arrays.asList(
   new Person("Bob", 25),
@@ -47,6 +48,7 @@ adapter.setItems(Arrays.asList(
   })
 ));
 RecyclerView rv;
+// set to RecyclerView
 rv.setAdapter(adapter);
 ```
 
@@ -65,3 +67,4 @@ More details, see [**example**](example).
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
